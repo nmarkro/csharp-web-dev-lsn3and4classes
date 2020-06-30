@@ -9,12 +9,30 @@ namespace SchoolPractice
         public Teacher Instructor { get; set; }
         public List<Student> enrolledStudents { get; set; }
 
+        public override string ToString()
+        {
+            return Topic + " (Teacher: " + Instructor.FirstName + " " + Instructor.LastName + ", Students: " + enrolledStudents + ")";
+        }
 
-        // TODO: Add your custom 'ToString' method here. Make sure it returns a well-formatted string rather than
-        //  just the class fields.
+        public override bool Equals(object obj)
+        {
+            if (obj == this)
+            {
+                return true;
+            }
 
+            if (obj == null)
+            {
+                return false;
+            }
 
-        // TODO: Add your custom 'Equals' method here. Consider which fields should match in order to call two
-        //  Course objects equal.
+            if (this.GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            Course c = obj as Course;
+            return c.Topic == this.Topic && c.Instructor == this.Instructor;
+        }
     }
 }
