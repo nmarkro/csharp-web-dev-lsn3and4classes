@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.InteropServices;
+
 namespace SchoolPractice
 {
     public class Student
@@ -27,24 +29,58 @@ namespace SchoolPractice
             nextStudentId++;
         }
 
-        // TODO: Complete the AddGrade method.
         public void AddGrade(int courseCredits, double grade)
         {
             // Update the appropriate properties: NumberOfCredits, Gpa
+            double totalQualityScore = Gpa * NumberOfCredits;
+            double courseQualityScore = grade * courseCredits;
+            totalQualityScore += courseQualityScore;
+            NumberOfCredits += courseCredits;
+            Gpa = totalQualityScore / NumberOfCredits;
         }
 
-        //TODO: Complete the GetGradeLevel method here:
         public string GetGradeLevel(int credits)
         {
             // Determine the grade level of the student based on NumberOfCredits
+            if (NumberOfCredits >= 90)
+            {
+                return "Senior";
+            } else if (NumberOfCredits >= 60)
+            {
+                return "Junior";
+            } else if (NumberOfCredits >= 30)
+            {
+                return "Sophomore";
+            } else if (NumberOfCredits >= 0)
+            {
+                return "Freshman";
+            }
             return "grade level tbd";
         }
 
-        // TODO: Add your custom 'ToString' method here. Make sure it returns a well-formatted string rather
-        //  than just the class fields.
+        public override string ToString()
+        {
+            return Name + " (Credits: " + NumberOfCredits + ", GPA: " + Gpa + ")";
+        }
 
-        // TODO: Add your custom 'Equals' method here. Consider which fields should match in order to call two
-        //  Student objects equal.
+        public override bool Equals(object obj)
+        {
+            if (obj == this)
+            {
+                return true;
+            }
 
+            if (obj == null)
+            {
+                return false;
+            }
+
+            if (this.GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            return (obj as Student).StudentId == this.StudentId;
+        }
     }
 }
